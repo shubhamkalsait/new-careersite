@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: linux
+      MYSQL_PASSWORD: redhat
+      MYSQL_DATABASE: career_site_jobs
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  job-service:
+    build: 
+      context: ./backend/job-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/career_site_jobs?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: linux
+      SPRING_DATASOURCE_PASSWORD: redhat
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  application-service:
+    build:
+      context: ./backend/application-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/career_site_applications?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: linux
+      SPRING_DATASOURCE_PASSWORD: redhat
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - job-service
+      - application-service
+
+volumes:
+  mysql_data: 
