@@ -12,22 +12,26 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./backend/job-service/src/main/resources/data.sql:/docker-entrypoint-initdb.d/01-jobs.sql
+      - ./backend/application-service/src/main/resources/data.sql:/docker-entrypoint-initdb.d/02-applications.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
+    command: --init-file /docker-entrypoint-initdb.d/01-jobs.sql,/docker-entrypoint-initdb.d/02-applications.sql
 
   job-service:
     build: 
       context: ./backend/job-service
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "3.148.244.239:8080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/career_site_jobs?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: linux
       SPRING_DATASOURCE_PASSWORD: redhat
+      SPRING_CORS_ALLOWED_ORIGINS: http://3.148.244.239:5173
     depends_on:
       mysql:
         condition: service_healthy
@@ -37,11 +41,12 @@ services:
       context: ./backend/application-service
       dockerfile: Dockerfile
     ports:
-      - "8081:8081"
+      - "3.148.244.239:8081:8081"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/career_site_applications?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: linux
       SPRING_DATASOURCE_PASSWORD: redhat
+      SPRING_CORS_ALLOWED_ORIGINS: http://3.148.244.239:5173
     depends_on:
       mysql:
         condition: service_healthy
@@ -51,7 +56,10 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "5173:5173"
+      - "3.148.244.239:5173:5173"
+    environment:
+      VITE_API_JOB_SERVICE: http://3.148.244.239:8080
+      VITE_API_APPLICATION_SERVICE: http://3.148.244.239:8081
     depends_on:
       - job-service
       - application-service
