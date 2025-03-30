@@ -51,19 +51,31 @@ const JobForm = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const jobData = {
-        ...formData,
-        postedDate: new Date().toISOString(),
-      };
-      delete jobData.newRequirement;
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const jobData = {
+      title: formData.get('title'),
+      company: formData.get('company'),
+      location: formData.get('location'),
+      description: formData.get('description'),
+      requirements: formData.get('requirements'),
+      responsibilities: formData.get('responsibilities'),
+      salaryRange: formData.get('salaryRange'),
+      employmentType: formData.get('employmentType'),
+      experienceLevel: formData.get('experienceLevel'),
+    };
 
-      await axios.post('http://localhost:8080/api/jobs', jobData);
-      navigate('/admin/dashboard');
+    try {
+      if (id) {
+        await axios.put(`${import.meta.env.VITE_API_JOB_SERVICE}/api/jobs/${id}`, jobData);
+      } else {
+        await axios.post(`${import.meta.env.VITE_API_JOB_SERVICE}/api/jobs`, jobData);
+      }
+      navigate('/admin/jobs');
     } catch (error) {
-      console.error('Error creating job:', error);
+      console.error('Error saving job:', error);
+      setError('Failed to save job. Please try again.');
     }
   };
 

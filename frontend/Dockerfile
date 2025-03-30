@@ -8,6 +8,10 @@ RUN npm install
 
 COPY . .
 
+ENV NODE_ENV=production
+ENV VITE_API_JOB_SERVICE=http://3.148.244.239:8080
+ENV VITE_API_APPLICATION_SERVICE=http://3.148.244.239:8081
+
 RUN npm run build
 
 FROM nginx:alpine

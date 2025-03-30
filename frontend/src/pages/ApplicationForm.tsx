@@ -102,7 +102,7 @@ const ApplicationForm = () => {
 
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} component="div">
               <TextField
                 required
                 fullWidth
@@ -112,7 +112,7 @@ const ApplicationForm = () => {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} component="div">
               <TextField
                 required
                 fullWidth
@@ -122,7 +122,7 @@ const ApplicationForm = () => {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} component="div">
               <TextField
                 required
                 fullWidth
@@ -133,7 +133,7 @@ const ApplicationForm = () => {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} component="div">
               <TextField
                 required
                 fullWidth
@@ -143,7 +143,7 @@ const ApplicationForm = () => {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} component="div">
               <TextField
                 required
                 fullWidth
@@ -154,7 +154,7 @@ const ApplicationForm = () => {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} component="div">
               <TextField
                 fullWidth
                 multiline
@@ -165,7 +165,7 @@ const ApplicationForm = () => {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} component="div">
               <TextField
                 fullWidth
                 label="LinkedIn Profile"
@@ -174,7 +174,7 @@ const ApplicationForm = () => {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} component="div">
               <TextField
                 fullWidth
                 label="Portfolio Website"

@@ -17,7 +17,7 @@ const Home = () => {
         </Typography>
 
         <Grid container spacing={4} justifyContent="center" sx={{ mt: 4 }}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} component="div">
             <Box sx={{ p: 3, border: '1px solid #e0e0e0', borderRadius: 2 }}>
               <WorkIcon sx={{ fontSize: 40, color: 'primary.main', mb: 2 }} />
               <Typography variant="h5" gutterBottom>
@@ -37,7 +37,7 @@ const Home = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} component="div">
             <Box sx={{ p: 3, border: '1px solid #e0e0e0', borderRadius: 2 }}>
               <PersonIcon sx={{ fontSize: 40, color: 'secondary.main', mb: 2 }} />
               <Typography variant="h5" gutterBottom>

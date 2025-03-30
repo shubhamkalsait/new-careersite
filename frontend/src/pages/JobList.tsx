@@ -61,7 +61,7 @@ const JobList = () => {
 
       <Grid container spacing={3}>
         {jobs.map((job) => (
-          <Grid item xs={12} key={job.id}>
+          <Grid item xs={12} key={job.id} component="div">
             <Card>
               <CardContent>
                 <Typography variant="h5" component="h2">
